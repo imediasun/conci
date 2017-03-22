@@ -1,0 +1,19 @@
+CABILY  VERSION UPDATES:
+------------------------
+Release Date: 24th November 2016
+
+This Version(V5.0) contains 8 Major update(s).
+1.	Bug Fixing.
+2. Security Constraints
+3. Front end booking
+4. Multi Language Support
+5. Adding Wallet money through admin panel
+6. Viewing users and drivers in map on admin panel.
+7. Ride Dashboard
+8. Updated Fare System
+9. UI Change
+
+
+
+Thanks
+Cabily Team.
