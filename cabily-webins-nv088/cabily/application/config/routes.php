@@ -141,30 +141,35 @@ $route['v5/app/driver/signup/success'] = "site/app_driver/success";
 |----------------------------------------------------------------
 |
 */
-
+if(glob("convey/*.php")){
 foreach (glob("convey/*.php") as $filename) {
     if (is_file($filename)) {
         require_once $filename;
     }
 }
+}
+if(glob("convey/v4/*.php")){
 foreach (glob("convey/v4/*.php") as $filename) {
     if (is_file($filename)) {
         require_once $filename;
     }
 }
+}
+if(glob("convey/v5/*.php")){
 foreach (glob("convey/v5/*.php") as $filename) {
     if (is_file($filename)) {
         require_once $filename;
     }
 }
-
+}
+if(glob("convey/n1/*.php")){
 foreach (glob("convey/n1/*.php") as $filename) {
     if (is_file($filename)) {
         require_once $filename;
     }
 }
 
-
+}
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

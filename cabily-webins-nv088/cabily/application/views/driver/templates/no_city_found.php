@@ -2,7 +2,7 @@
 $this->load->view('site/templates/common_header');
 ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&amp;sensor=false&amp;key=<?php echo $this->config->item('google_maps_api_key');?>"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&amp;key=AIzaSyBUpdeDyprvbMawWpHRn_0KMN0416PPsks"></script>
 
 
 <script type="text/javascript">
