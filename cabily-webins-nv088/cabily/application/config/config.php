@@ -19,7 +19,7 @@ if (!defined('BASEPATH'))
   | environments.
   |
  */
-$config['base_url'] = '';
+$config['base_url'] = 'http://conci.imedia.in.ua';
 
 /*
   |--------------------------------------------------------------------------

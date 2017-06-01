@@ -85,6 +85,22 @@ class Profile extends MY_Controller {
             redirect('driver/dashboard');
         }
     }
+	
+	public function test_register(){ 
+	print(987);
+
+    $str = @file_get_contents(base_url().'/lg_files/country_list.json');
+    $str_arr=json_decode($str);
+    $i=0;
+    foreach($str_arr as $key=>$obj){
+
+        $this->data['countryList'][$i]->dial_code=$obj->code;
+        $this->data['countryList'][$i]->name=$obj->name;
+        $i++;
+    }
+
+	$this->load->view('driver/templates/register_cp.php', $this->data);
+	}
 
     /**
      * 

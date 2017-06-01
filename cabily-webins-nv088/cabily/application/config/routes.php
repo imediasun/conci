@@ -91,6 +91,7 @@ $route['invoice/(:any)'] = "site/user/load_invoice";
 $route['driver'] = "driver/profile";
 $route['driver/login'] = "driver/profile/login_form";
 $route['driver/signup'] = "driver/profile/register_form";
+$route['driver/test'] = "driver/profile/test_register";
 $route['driver/signup/(:any)'] = "driver/profile/singupInitiate_category_form";
 $route['driver/register/(:any)'] = "driver/profile/singupInitiate_form";
 $route['driver/reset-password'] = "driver/profile/driver_forgot_password_form";

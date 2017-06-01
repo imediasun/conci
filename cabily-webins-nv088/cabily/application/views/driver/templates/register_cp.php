@@ -1,4 +1,5 @@
 <?php
+print(121);
 
 $this->load->view('site/templates/common_header');
 ?>
@@ -18,6 +19,7 @@ else
 <script src="js/jquery-ui-1.8.18.custom.min.js"></script>
 <link href="css/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" media="screen">
 <link rel="stylesheet" href="css/site/screen.css">
+<link rel="stylesheet" href="css/site/form.css">
 <style>
 .sign_up_base .onoffswitch-inner:before {
   content: "<?php echo $active; ?>";
@@ -46,12 +48,11 @@ else
             </div>
             <div class="col-lg-5 driver_detail_center text-center">
                 <div class="driver_form_start">
-				
                     <h1><?php
                         if ($this->lang->line('driver_sign_up_today') != '')
                             echo stripslashes($this->lang->line('driver_sign_up_today'));
                         else
-                            echo 'sign Up Today';
+                            echo 'Sign Up Today';
                         ?></h1>
                     <h2><?php
                         if ($this->lang->line('driver_tell_us') != '')
@@ -60,6 +61,8 @@ else
                             echo 'Tell us a bit about yourself';
                         ?></h2>
                 </div>
+
+
 
                 <form name="driver_register_form" id="driver_register_form" action="driver/profile/register" method="post" enctype="multipart/form-data">
 
@@ -70,7 +73,7 @@ else
                         <input type="hidden" name="category" id="category" value="<?php if (isset($categoryDetail->_id)) echo $categoryDetail->_id; ?>" class="required"/>
 
                         <div class="headline-hr"></div>
-                        <span class="bdr_bg"><h3><?php
+                        <span class="bdr_bg"><h3 style="color: #fd9f00;"><?php
                                 if ($this->lang->line('driver_login_details') != '')
                                     echo stripslashes($this->lang->line('driver_login_details'));
                                 else
@@ -90,6 +93,26 @@ else
                                 else
                                     echo 'Your Name';
                                 ?>"/>
+                            </div>
+
+                            <div class="col-lg-6 sign_up_base" style="padding-right: 10px">
+                                <label class="text-left" for="gender-input">
+                                    Gender
+                                </label>
+                                <select name="" id="gender-input" class="required form-control">
+                                    <option value="">Male</option>
+                                    <option value="">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-6 sign_up_base" style="padding-left: 10px">
+                                <label class="text-left" for="birth-input">
+                                    Year of Birth
+                                </label>
+                                <select name="" id="birth-input" class="required form-control">
+                                    <option value="">1990</option>
+                                    <option value="">1991</option>
+                                </select>
                             </div>
 
                             <div class="col-lg-12 sign_up_base">
@@ -143,12 +166,22 @@ else
 
                         <div class="sign_up_block col-lg-12 nopadd">
                             <div class="headline-hr"></div>
-                            <span class="bdr_bg"><h3><?php
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;"><?php
                                     if ($this->lang->line('driver_address_details') != '')
                                         echo stripslashes($this->lang->line('driver_address_details'));
                                     else
                                         echo 'Address Details';
                                     ?></h3></span>
+                            <div class="col-lg-12 sign_up_base">
+                                <label for="select-operated-in-city" class="text-left">
+                                    Operated in City
+                                </label>
+                                <select name="" id="select-operated-in-city" class="required form-control">
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                </select>
+                            </div>
                             <div class="col-lg-12 sign_up_base ">
                                 <label class="text-left"><span></span><?php
                                     if ($this->lang->line('cms_address') != '')
@@ -170,8 +203,13 @@ else
                                     else
                                         echo 'Country';
                                     ?></label>
+                                <?php
+
+                                ?>
                                 <select name="county" id="county" tabindex="7" class="required form-control" title="Please choose ypur country">
-                                    <?php foreach ($countryList as $country) { ?>
+                                    <?php
+
+                                    foreach ($countryList as $country) { ?>
                                         <option value="<?php echo $country->name; ?>" data-dialCode="<?php echo $country->dial_code; ?>"><?php echo $country->name; ?></option>
                                     <?php } ?>
                                 </select>
@@ -222,7 +260,7 @@ else
                                     ?></label>
                                 <input type="text" name="dail_code" placeholder="<?php echo $d_country_code; ?>" id="country_code" class="form-control required phoneCode" />
                                 <input type="text" name="mobile_number" id="mobile_number" class="form-control required number phoneNumber" placeholder="777-777-777" >
-								 <button type="button" class="btn1 category_btn mob_resend_otp" id="otp_send_btn" onclick="sendOtp();"><?php
+								 <button type="button" class="btn1 category_btn mob_resend_otp" id="otp_send_btn" onclick="sendOtp();" style="background: #fd9f00"><?php
                                 if ($this->lang->line('send_otp') != '')
                                     echo stripslashes($this->lang->line('send_otp'));
                                 else
@@ -239,147 +277,133 @@ else
 					            <input type="hidden" id="otp_country_code" value=""/>
 								<input type="hidden" id="isNumberExists" value=""/>
 							</div>
-							<div class="col-lg-12 sign_up_base otp_container" id="otp_container">
+							<div class="col-lg-12 sign_up_base otp_container" id="otp_container" style="display: block;">
 								<label class="text-left">Enter OTP : </label>
 								 <input type="text" name="mobile_otp" id="mobile_otp" class="form-control required mob_otp"  placeholder="Please enter otp">
-								 <button type="button" class="btn1 category_btn mob_resend_otp" onclick="verifyOtp();">Verify OTP</button>	
+								 <button type="button" class="btn1 category_btn mob_resend_otp" onclick="verifyOtp();" style="height: 42px; vertical-align: bottom; background: #fd9f00">Verify OTP</button>
 							</div>
                         </div>
-
-
                         <div class="sign_up_block col-lg-12 nopadd">
                             <div class="headline-hr"></div>
-                            <span class="bdr_bg"><h3><?php
-                                    if ($this->lang->line('driver_identity') != '')
-                                        echo stripslashes($this->lang->line('driver_identity'));
-                                    else
-                                        echo 'Identity';
-                                    ?></h3></span>
-                            <div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_your_profile_image') != '')
-                                        echo stripslashes($this->lang->line('driver_your_profile_image'));
-                                    else
-                                        echo 'Your Profile Image';
-                                    ?></label>
-                                <input name="thumbnail" id="thumbnail" type="file" tabindex="12" class=""  title="Please enter your profile image"/>
-                            </div>
-                        </div>
-                        <div class="sign_up_block col-lg-12 nopadd">
-                            <div class="headline-hr"></div>
-                            <span class="bdr_bg"><h3><?php
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;"><?php
                                     if ($this->lang->line('driver_vehicle_info') != '')
                                         echo stripslashes($this->lang->line('driver_vehicle_info'));
                                     else
                                         echo 'Vehicle Information';
                                     ?></h3></span>
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_vehicle_type') != '')
-                                        echo stripslashes($this->lang->line('driver_vehicle_type'));
-                                    else
-                                        echo 'Vehicle Type';
-                                    ?></label>
-                                <select class="required form-control"  name="vehicle_type" id="vehicle_type" >
-                                    <option value=""><?php
-                                        if ($this->lang->line('driver_choose_vehicle_type') != '')
-                                            echo stripslashes($this->lang->line('driver_choose_vehicle_type'));
-                                        else
-                                            echo 'Please choose vehicle type... ';
-                                        ?></option>
-                                    <?php if ($vehicle_types->num_rows() > 0) { ?>
-                                        <?php foreach ($vehicle_types->result() as $vehicles) { ?>
-                                            <option value="<?php echo $vehicles->_id; ?>"><?php echo $vehicles->vehicle_type; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </select>
-                            </div>		
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_vehicle_maker') != '')
-                                        echo stripslashes($this->lang->line('driver_vehicle_maker'));
-                                    else
-                                        echo 'Vehicle Maker';
-                                    ?></label>
-                                <select class="required form-control"  name="vehicle_maker" id="vehicle_maker" >
-                                    <option value=""><?php
-                                        if ($this->lang->line('driver_choose_vehicle_maker') != '')
-                                            echo stripslashes($this->lang->line('driver_choose_vehicle_maker'));
-                                        else
-                                            echo 'Please choose vehicle maker...';
-                                        ?></option>
-                                    <?php if ($brandList->num_rows() > 0) { ?>
-                                        <?php foreach ($brandList->result() as $brand) { ?>
-                                            <option value="<?php echo $brand->_id; ?>"><?php echo $brand->brand_name; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
+                            <div class="col-lg-12 sign_up_base">
+                                <label class="text-left" for="select-type-of-service">
+                                    Type of Service
+                                </label>
+                                <select name="" class="required form-control" id="select-type-of-service">
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
                                 </select>
                             </div>
-							
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('dash_vehicle_model') != '')
-                                        echo stripslashes($this->lang->line('dash_vehicle_model'));
-                                    else
-                                        echo 'Vehicle Model';
-                                    ?></label>
-                                <select class="required form-control"  name="vehicle_model" id="vehicle_model" >
-                                    <option value=""><?php
-                                        if ($this->lang->line('driver_choose_vehicle_model') != '')
-                                            echo stripslashes($this->lang->line('driver_choose_vehicle_model'));
-                                        else
-                                            echo 'Please choose vehicle model...';
-                                        ?></option>
-                                     <?php 
-									$sldmodelYrs=array(); 
-									if ($modelList->num_rows() > 0) { $syr = 0; ?>
-                                        <?php foreach ($modelList->result() as $model) {
-											$modelYears = '';
-											if(isset($model->year_of_model))$modelYears = @implode(',',$model->year_of_model);
-											if($syr == 0)$sldmodelYrs = $model->year_of_model;
-											$syr++;
-										?>
-                                            <option value="<?php echo $model->_id; ?>" data-years="<?php echo $modelYears; ?>" data-vmodel="<?php echo $model->brand . '_' . $model->type; ?>"><?php echo $model->name; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
+                            <div class="col-lg-12 sign_up_base">
+                                <label class="text-left" for="select-skills">
+                                    Skills
+                                </label>
+                                <select name="" class="required form-control" id="select-skills">
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
                                 </select>
                             </div>
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php 
-						if($this->lang->line('dash_year_of_model') != '') echo stripslashes($this->lang->line('dash_year_of_model')); else  echo 'Year Of Model';
-						?></label>
-                                <select class="required form-control"  name="vehicle_model_year" id="vehicle_model_year">
-                                        <option value=""><?php 
-						if($this->lang->line('dash_please_choose_year_of_model') != '') echo stripslashes($this->lang->line('dash_please_choose_year_of_model')); else  echo 'Please choose year of model';
-						?>...</option>
-                                        <?php 
-											if (count($sldmodelYrs) > 0) { ?>
-                                            <?php foreach ($sldmodelYrs as $modelyr) { 			
-											?>
-                                                <option value="<?php echo $modelyr; ?>"><?php echo $modelyr; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
+                        </div>
+                        <div class="sign_up_block col-lg-12 nopadd">
+                            <div class="headline-hr"></div>
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;">Languages</h3></span>
+                            <div>
+                                <div class="col-lg-6 sign_up_base" style="padding-right: 10px;">
+                                    <label class="text-left" for="select-language1">
+                                        1.
+                                    </label>
+                                    <select name="" class="required form-control" id="select-language1">
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                        <option value="">1</option>
                                     </select>
+                                </div>
+                                <div class="col-lg-6 sign_up_base" style="padding-left: 10px;">
+                                    <label class="text-left" for="select-language2">
+                                        2.
+                                    </label>
+                                    <select name="" class="required form-control" id="select-language2">
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 sign_up_base" style="padding-right: 10px;">
+                                    <label class="text-left" for="select-language3">
+                                        3.
+                                    </label>
+                                    <select name="" class="required form-control" id="select-language3">
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 sign_up_base" style="padding-left: 10px;">
+                                    <label class="text-left" for="select-language4">
+                                        4.
+                                    </label>
+                                    <select name="" class="required form-control" id="select-language4">
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                        <option value="">1</option>
+                                    </select>
+                                </div>
                             </div>
+                        </div>
+                        <div class="sign_up_block col-lg-12 nopadd">
+                            <div class="headline-hr"></div>
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;">Liabilities</h3></span>
                             <div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_vehicle_number') != '')
-                                        echo stripslashes($this->lang->line('driver_vehicle_number'));
-                                    else
-                                        echo 'Vehicle Number';
-                                    ?></label>
-                                <input name="vehicle_number" id="vehicle_number"  type="text" tabindex="16" class="required form-control Vehicle_Number_Chk" />
-                                <label class="error_chk" id="vehicle_number_exist"></label>
-                            </div>								
-
-                            <input name="driver_id" type="hidden" value="" />
-                            <div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_air_conditioned') != '')
-                                        echo stripslashes($this->lang->line('driver_air_conditioned'));
-                                    else
-                                        echo 'Air Conditioned';
-                                    ?> </label>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="welcoming"></span>
+                                        <h4 class="panel-title">Welcoming</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="clothing"></span>
+                                        <h4 class="panel-title">Clothing respected</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="privacy"></span>
+                                        <h4 class="panel-title">Privacy</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="criminal"></span>
+                                        <h4 class="panel-title">No criminal record</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 sign_up_base " style="margin-bottom: 25px;">
                                 <div class="onoffswitch">
                                     <input type="checkbox" name="aircond" class="onoffswitch-checkbox" id="myonoffswitch" checked="checked" />
                                     <label class="onoffswitch-label" for="myonoffswitch">
@@ -387,10 +411,13 @@ else
                                         <span class="onoffswitch-switch"></span>
                                     </label>
                                 </div>
-
                             </div>
+                            <p class="text-left"><label class="check-emulator"><input type="checkbox"><span></span></label>By proceeding, I agree that Conci or its representatives may contact me by email,
+                             phone, or SMS (including by automatic telephone dialing system) at the email address or number I provide,
+                            including for marketing purposes. I have read and understand the relevant Conci Guide Privacy Statement.</p>
+                            <!--<button type="button" class="btn1 category_btn mob_resend_otp submit-btn">SUBMIT</button>-->
                         </div>
-<div class="clearfix"></div>
+                        <div class="clearfix"></div>
                         <!-------------------------       DOCUMENTS          ------------------------------>
                         <?php if ($docx_list->num_rows() > 0) { ?>
                             <div class="sign_up_block col-lg-12 nopadd">
@@ -557,12 +584,14 @@ else
                                             echo 'Driver Privacy Statement.';
                                         ?></a></p>
                             </div>
-                            <input type="submit" class=" btn1 category_btn" value="<?php
-                            if ($this->lang->line('user_submit_upper') != '')
-                                echo stripslashes($this->lang->line('user_submit_upper'));
-                            else
-                                echo 'SUBMIT';
-                            ?>" />
+
+
+                             <input type="submit" class=" btn1 category_btn" value="<?php
+                             if ($this->lang->line('user_submit_upper') != '')
+                                  echo stripslashes($this->lang->line('user_submit_upper'));
+                              else
+                                  echo 'SUBMIT';
+                              ?>" />
                         </div>
                     </div>
 
@@ -581,6 +610,7 @@ else
         $(document).ready(function () {
             $("#driver_register_form").validate({
 			submitHandler: function(form) {
+                alert()
 			  otp_phone_number=$("#otp_phone_number").val();
 			  otp_country_code=$("#otp_country_code").val();
 			  phone_code = $('#country_code').val();
