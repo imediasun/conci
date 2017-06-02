@@ -45,7 +45,7 @@ $route['admin'] = "admin/adminlogin";
 $route[ADMIN_ENC_URL] = "admin/adminlogin";
 
 $route['login'] = "site/user/login_index_form";
-$route['signup'] = "site/user/signup_index_form";
+$route['signup'] = "/site/user/signup_index_form";
 $route['language-settings'] = "site/landing/changeLangage";
 $route['rider/login'] = "site/user/login_form";
 $route['rider/reset-password'] = "site/user/forgot_password_form";

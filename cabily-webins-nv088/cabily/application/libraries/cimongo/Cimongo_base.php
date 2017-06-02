@@ -132,7 +132,8 @@ class Cimongo_base {
 				require './installation.php';exit;
 			}else{
 				$this->connection = new MongoClient($this->connection_string, $options);
-				$this->db = $this->connection->{$this->dbname};
+                $this->db = $this->connection->{$this->dbname};
+
 				return $this;
 			}
 		}catch (MongoConnectionException $e){

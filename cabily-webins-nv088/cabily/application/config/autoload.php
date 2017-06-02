@@ -80,7 +80,7 @@ $autoload['helper'] = array();
 |
 */
 
-$autoload['config'] = array('google','twilio');
+$autoload['config'] = array('google','twilio','cimongo');
 
 
 /*

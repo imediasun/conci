@@ -72,14 +72,17 @@ class Adminlogin extends MY_Controller {
         } else {
             $name = $this->input->post('admin_name');
             $pwd = md5($this->input->post('admin_password'));
-            $collection = SUBADMIN;
+            /*$collection = SUBADMIN;*/
+            $collection = 'dectar_admin';
             if ($name == $this->config->item('admin_name')) {
                 $collection = ADMIN;
             }
             $condition = array('admin_name' => $name, 'admin_password' => $pwd, 'is_verified' => 'Yes', 'status' => 'Active');
+
             $query = $this->admin_model->get_all_details($collection, $condition);
 
             if ($query->num_rows() == 1) {
+
 				$privileges = $query->row()->privileges;
 				if(is_array($privileges)){
 					$priv =$privileges;
