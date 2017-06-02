@@ -90,14 +90,23 @@ class Profile extends MY_Controller {
 	print(987);
 
     $str = @file_get_contents(base_url().'/lg_files/country_list.json');
-    $str_arr=json_decode($str);
-    $i=0;
-    foreach($str_arr as $key=>$obj){
+        $str_arr=json_decode($str);
+        $i=0;
+        foreach($str_arr as $key=>$obj){
 
-        $this->data['countryList'][$i]->dial_code=$obj->code;
-        $this->data['countryList'][$i]->name=$obj->name;
-        $i++;
-    }
+            $this->data['countryList'][$i]->dial_code=$obj->code;
+            $this->data['countryList'][$i]->name=$obj->name;
+            $i++;
+        }
+    $str = @file_get_contents(base_url().'/lg_files/country_list.json');
+        $str_arr=json_decode($str);
+        $i=0;
+        foreach($str_arr as $key=>$obj){
+
+            $this->data['countryList'][$i]->dial_code=$obj->code;
+            $this->data['countryList'][$i]->name=$obj->name;
+            $i++;
+        }
 
 	$this->load->view('driver/templates/register_cp.php', $this->data);
 	}
@@ -296,7 +305,7 @@ class Profile extends MY_Controller {
         /**
          * clear the temp folders
          */
-        #echo '<pre>'; print_r($_POST); die;
+        echo '<pre>'; print_r($_POST); die;
 
         $driver_id = $this->input->post('driver_id');
 

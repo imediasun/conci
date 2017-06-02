@@ -1,9 +1,11 @@
 <?php
 $this->load->view('site/templates/common_header');
-/* <?php echo $this->config->item('google_maps_api_key');?> */
+print('API CHECK');
+/*  */
+var_dump($this->config->item('google_maps_api_key'));
 ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&amp;key=AIzaSyBUpdeDyprvbMawWpHRn_0KMN0416PPsks"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&amp;key=<?php echo $this->config->item('google_maps_api_key');?>"></script>
 
 <?php 
 /* <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=<?php echo $this->config->item('google_maps_api_key');?>"></script> */ 

@@ -25,6 +25,8 @@ class Sms_twilio extends MY_Controller {
 		
 		$otp_phone=$this->input->post('otp_phone');
 		$phone_code = $this->input->post('phone_code');
+
+
 		
 		$checkMob = $this->user_model->get_selected_fields(DRIVERS,array('mobile_number' => $otp_phone),array(),array('_id'));
 		if($checkMob->num_rows() > 0){
@@ -44,11 +46,13 @@ class Sms_twilio extends MY_Controller {
 				$this->session->set_userdata($session_data);
 				}
 				$this->session->set_userdata(APP_NAME.'sms_otp',$otp_number);
-				$from = $this->config->item('twilio_number');
+				$from = $this->config->item('twilio_number');/*twilio_number*/
+
 				$to = $phone_code.$otp_phone;
 				$message = 'Dear driver! your '.$this->config->item('email_title').' one time password is '.$otp_number;
-				$response = $this->twilio->sms($from, $to, $message); 
-				
+				$response = $this->twilio->sms($from, $to, $message);
+
+
 				if($this->checkLogin('D') != ''){
 					try{
 						$condition = array('_id' => new \MongoId($this->checkLogin('D')));

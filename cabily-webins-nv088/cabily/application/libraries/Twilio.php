@@ -41,7 +41,7 @@
 //			$this->api_version = $this->_ci->config->item('api_version', 'twilio');
 //			$this->number      = $this->_ci->config->item('number', 'twilio');
 
-             $this->mode        = $this->_ci->config->item('twilio_account_type');
+            $this->mode        = $this->_ci->config->item('twilio_account_type');
 			$this->account_sid = $this->_ci->config->item('twilio_account_sid');
 			$this->auth_token  = $this->_ci->config->item('twilio_auth_token');
 			$this->api_version = '2010-04-01';
@@ -49,6 +49,7 @@
 
 			//initialize the client
 			$this->_twilio = new TwilioRestClient($this->account_sid, $this->auth_token);
+
 		}
 
 		/**
