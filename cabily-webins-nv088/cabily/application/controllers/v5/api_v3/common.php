@@ -165,7 +165,9 @@ class Common extends MY_Controller {
 				$lang_code = $this->mailLang;
 			}
 			
-			$infoArr =  array('site_contact_mail' => (string)$this->config->item('site_contact_mail'),
+			$infoArr =  array(
+				'id'=>$id,
+				'site_contact_mail' => (string)$this->config->item('site_contact_mail'),
 							'customer_service_number' => (string)$this->config->item('customer_service_number'),
 							'server_mode' => $server_mode,
 							'site_mode' => $site_mode_status,

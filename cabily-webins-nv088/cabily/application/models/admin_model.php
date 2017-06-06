@@ -10,6 +10,7 @@ class Admin_model extends My_Model
 	public function __construct() 
 	{
 		parent::__construct();
+
 	}
 	
 	public function add_edit_subdriver($dataArr='',$condition=''){

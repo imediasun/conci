@@ -30,6 +30,7 @@ class My_Model extends CI_Model {
     *
     * */
     public function get_all_details($collection, $condition = array(), $sortArr = array(), $limit = FALSE, $offset = FALSE, $likearr = array()) {
+
         $this->cimongo->select();
         if (!empty($condition)) {
             $this->cimongo->where($condition);
@@ -50,6 +51,7 @@ class My_Model extends CI_Model {
             $res = $this->cimongo->get($collection, $limit, $offset);
         } else {
             $res = $this->cimongo->get($collection);
+
         }
 
         return $res;

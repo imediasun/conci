@@ -1,7 +1,7 @@
 <?php 
 $dbhost = 'localhost';
 $dbport = '27017';
-$databaseName = 'conci';
+$databaseName = 'mongoappconciinfo1';
 $dbUserName = 'imediasun';
 $dbPassword = 'sunimedia';
 ?>

@@ -127,12 +127,21 @@ class Cimongo_base {
 	 */
 	private function connect(){
 		$options = array();
+		
+
+
+		
 		try{		
 			if (file_exists('installation.php')){
+				
 				require './installation.php';exit;
 			}else{
+				
+				
 				$this->connection = new MongoClient($this->connection_string, $options);
-				$this->db = $this->connection->{$this->dbname};
+				
+                $this->db = $this->connection->{$this->dbname};
+
 				return $this;
 			}
 		}catch (MongoConnectionException $e){
@@ -178,12 +187,15 @@ class Cimongo_base {
 		}else{
 			$connection_string .= "{$this->host}";
 		}
+		
+		
 
 		if ($dbhostflag === TRUE){
 			$this->connection_string = trim($connection_string) . '/' . $this->dbname;
 		}else{
 			$this->connection_string = trim($connection_string);
 		}
+		// $this->connection_string .= "?authSource=dbWithUserCredentials";
 
 	}
 

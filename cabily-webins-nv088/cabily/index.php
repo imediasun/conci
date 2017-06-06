@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -175,7 +176,7 @@ if (is_dir($application_folder)) {
         exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: " . SELF);
     }
 
-    define('APPPATH', BASEPATH . $application_folder . '/');
+    define('APPPATH', BASEPATH . $application_folder . '/'); 
 }
 
 /*
@@ -188,5 +189,3 @@ if (is_dir($application_folder)) {
  */
 require_once BASEPATH . 'core/CodeIgniter.php';
 
-/* End of file index.php */
-/* Location: ./index.php */
