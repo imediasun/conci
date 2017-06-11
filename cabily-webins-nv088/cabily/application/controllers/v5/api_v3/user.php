@@ -19,8 +19,22 @@ class User extends MY_Controller {
         
 		/* Authentication Begin */
         $headers = $this->input->request_headers();
+        /*$json_encode = json_encode($headers, JSON_PRETTY_PRINT);
+        echo $this->cleanString($json_encode);
+        die;*/
 		header('Content-type:application/json;charset=utf-8');
-		if (array_key_exists("Authkey", $headers)) $auth_key = $headers['Authkey']; else $auth_key = "";
+		if (array_key_exists("Authkey", $headers)) {
+
+            $auth_key = $headers['Authkey'];
+           /* var_dump($auth_key);die;*/
+
+        }
+        else{
+            $auth_key = "";
+
+        }
+
+
 		if(stripos($auth_key,APP_NAME) === false) {
 			$cf_fun= $this->router->fetch_method();
 			$apply_function = array();
@@ -56,13 +70,13 @@ class User extends MY_Controller {
                 }
             }
         } catch (MongoException $ex) {
-            
+
         }
 		/* Authentication End */
 		
     }
-	
-	
+
+
 	
 	/**
      * 
@@ -70,6 +84,7 @@ class User extends MY_Controller {
      */
 	 
 	  public function add_favourite_driver() {
+
         $returnArr['status'] = '0';
         $returnArr['response'] = '';
         try {
@@ -77,7 +92,10 @@ class User extends MY_Controller {
             $desc = trim($this->input->post('description'));
             $user_id = $this->input->post('user_id');
 			$driver_id = $this->input->post('driver_id');
+
+
 			if(isset($title)&&isset($user_id)&&isset($driver_id)){
+
 				if(!empty($title)&&!empty($user_id)&&!empty($driver_id)){
 					$user_details=$this->user_action_model->get_selected_fields(USERS,array('_id'=>new MongoId($user_id)),array('_id'));
 					if($user_details->num_rows()>0){
@@ -589,7 +607,9 @@ class User extends MY_Controller {
         $ride_id = $this->input->post('ride_id');
         if ($ride_id == '') {
             $ride_id = $this->input->get('ride_id');
+
         }
+
         $returnArr['status'] = '0';
         if ($ride_id != '') {
             $checkRide = $this->app_model->get_selected_fields(RIDES, array('ride_id' => $ride_id), array('ride_id', 'ride_status', 'booking_information', 'driver', 'coupon_used', 'coupon', 'cancelled'));

@@ -1,1 +1,1 @@
-<?php $config["last_billing_date"] = "2016-11-23";  ?>
+<?php $config["last_billing_date"] = "2017-06-10";  ?>

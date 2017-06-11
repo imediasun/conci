@@ -22,7 +22,7 @@ class Common extends MY_Controller {
 		if (array_key_exists("Authkey", $headers)) $auth_key = $headers['Authkey']; else $auth_key = "";
 		if(stripos($auth_key,APP_NAME) === false) {
 			$cf_fun= $this->router->fetch_method();
-			$apply_function = array('update_receive_mode','get_app_info');
+			$apply_function = array('update_receive_mode','get_app_info','get_notification_list');
 			if(!in_array($cf_fun,$apply_function)){
 				show_404();
 			}
@@ -83,7 +83,6 @@ class Common extends MY_Controller {
 	*	This function will update the users/drivers current availablity
 	*
 	**/
-	
 	public function update_receive_mode() {
         $returnArr['status'] = '0';
         $returnArr['response'] = '';
@@ -131,9 +130,10 @@ class Common extends MY_Controller {
 	*
 	**/	
 	public function get_app_info() {
+
         $returnArr['status'] = '0';
         $returnArr['response'] = '';
-		
+
 		try {
 			$usertype = (string)strtolower($this->input->post('user_type'));	# 	(user/driver)
 			$id = (string)$this->input->post('id');
@@ -153,11 +153,11 @@ class Common extends MY_Controller {
 					$xmpp_host_name = 'messaging.dectar.com';
 				}
 			}
-			
-			$site_mode_string = "currently we are not able to service you, please try again later";
-			$site_mode_status = (string)$this->config->item('site_mode');
+
+			$site_mode_string = "* currently we are not able to service you, please try again later !";
+		    $site_mode_status = (string)$this->config->item('site_mode');
 			if($site_mode_status==""){
-				$site_mode_status = "development";	#(development/production)
+				$site_mode_status = "production";	#(development/production)
 			}
 			
 			$lang_code = "en";
@@ -200,8 +200,11 @@ class Common extends MY_Controller {
 					$collection = DRIVERS;
 				}
 				if($collection!=''){
-					$userInfo = $this->app_model->get_selected_fields($collection, array('_id' => new \MongoId($id)), array('chat_status','lang_code'));					
+				$userInfo = $this->app_model->get_selected_fields($collection, array('_id' => new \MongoId($id)), array('chat_status','lang_code' ));
+
 					if($userInfo->num_rows()==1){
+						$infoArr['num_rows'] = "1";
+						
 						if(isset($userInfo->row()->lang_code)){
 							$infoArr['lang_code'] = $userInfo->row()->lang_code;
 						}else{
@@ -209,15 +212,15 @@ class Common extends MY_Controller {
 						}						
 					}
 				}
-				if($collection == USERS){
-					$userVal = $this->user_model->get_selected_fields(USERS, array('_id' => new \MongoId($id)), array( 'image'));
-					$user_image = USER_PROFILE_IMAGE_DEFAULT;
-					if(isset($userVal->row()->image)){
-						if ($userVal->row()->image != '') {
-							$user_image = USER_PROFILE_IMAGE . $userVal->row()->image;
-						}
-					}
-					$infoArr['user_image'] = base_url() . $user_image;
+                if($collection == USERS){
+                $userVal = $this->user_model->get_selected_fields(USERS, array('_id' => new \MongoId($id)), array( 'image'));
+                $user_image = USER_PROFILE_IMAGE_DEFAULT;
+                if(isset($userVal->row()->image)){
+                if ($userVal->row()->image != '') {
+                $user_image = USER_PROFILE_IMAGE . $userVal->row()->image;
+                }
+                }
+                $infoArr['user_image'] = base_url() . $user_image;
 				}
 						
 			}
@@ -229,8 +232,74 @@ class Common extends MY_Controller {
         }
         $json_encode = json_encode($returnArr, JSON_PRETTY_PRINT);
         echo $this->cleanString($json_encode);
-    }	
-	
+    }
+
+	public function get_notification_list() {
+
+		$returnArr['status'] = '0';
+		$returnArr['response'] = '';
+		try {
+			$user_id = $this->input->post('user_id');
+			$user_type = $this->input->post('user_type');
+			//Выводим все нотфикейшены конкретному юзеру
+
+			//инфа по notification
+
+			if(isset($user_id)&&!empty($user_id) && isset($user_type)&&!empty($user_type)){
+
+				$fav_condition = array('user_id' => new \MongoId($user_id));
+				$notifications = $this->app_model->get_all_details(NOTIFICATIONS, $fav_condition);
+
+
+				if($user_type=='user'){
+				$collection=USERS;
+				$name='user_name';
+				}
+				else{
+				$collection=DRIVERS;
+				$name='driver_name';
+				}
+				$userVal = $this->app_model->get_selected_fields($collection, array('_id' => new \MongoId($user_id)), array('email', $name ));
+				
+                if($userVal->num_rows()> 0) {
+					if ($notifications->num_rows() == 0) {
+						$returnArr['response'] = $this->format_string('No records found for in your notification list', 'no_records_found_in_your_notification_list');
+					} else {
+
+
+						foreach ($notifications->row()->notification_template_id as $key => $val) {
+						$nf = $this->app_model->get_selected_fields(NOTIFICATION_TEMPLATES, array('_id' => new \MongoId($val)), array('message'));
+						$notificationArr[]=$nf->row()->message;
+						}
+
+						if (empty($notificationArr)) {
+							$notificationArr = json_decode("{}");
+						}
+						$totalNotification = count($notificationArr);
+						if ($totalNotification > 0) {
+							$returnArr['status'] = '1';
+							$returnArr['response'] = array('user' => $userVal->row(), 'notification' => $notificationArr);
+						} else {
+							$returnArr['response'] = $this->format_string('No records found for in your notification list', 'no_records_found_in_your_notification_list');
+						}
+					}
+				}
+				else{
+					$returnArr['response'] = $this->format_string("Invalid User", "invalid_user");
+
+				}
+
+			} else {
+				$returnArr['response'] = $this->format_string("Some Parameters are missing", "some_parameters_missing");
+			}
+		} catch (MongoException $ex) {
+			$returnArr['response'] = $this->format_string("Error in connection", "error_in_connection");
+		}
+		$json_encode = json_encode($returnArr, JSON_PRETTY_PRINT);
+		echo $this->cleanString($json_encode);
+	}
+
+
 }
 
 /* End of file common.php */

@@ -102,6 +102,8 @@ define('RIDE_HISTORY', COL_PREF . 'ride_history');
 
 define('RIDE_STATISTICS', COL_PREF . 'ride_statistics');
 define('MULTI_LANGUAGES', COL_PREF . 'multi_languages');
+
+define('NOTIFICATIONS', COL_PREF . 'notifications');
 /*
   |
   |--------------------------------------------------------------------------

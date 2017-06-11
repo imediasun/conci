@@ -173,6 +173,16 @@ class App_driver extends MY_Controller {
         $this->data['brandList'] = $this->driver_model->get_all_details(BRAND, array('status' => 'Active'), array('brand_name' => 'ASC'));
         $this->data['modelList'] = $this->driver_model->get_all_details(MODELS, array('status' => 'Active'), array('name' => 'ASC'));
         $this->data['locationDetail'] = $get_locationId;
+        $str = @file_get_contents(base_url().'/lg_files/languages_list.json');
+        $str_arr=json_decode($str);
+        $i=0;
+        foreach($str_arr as $key=>$obj){
+
+            $this->data['languagesList'][$i]->dial_code=$obj->code;
+            $this->data['languagesList'][$i]->name=$obj->name;
+            $i++;
+        }
+
         $this->load->view('driver/forapp/register.php', $this->data);
     }
 	
@@ -187,10 +197,10 @@ class App_driver extends MY_Controller {
         /**
          * clear the temp folders
          */
-        #echo '<pre>'; print_r($_POST); die;
+      # echo '<pre>'; print_r($_POST); die;
 
-        $driver_id = $this->input->post('driver_id');
-
+        /*$driver_id = $this->input->post('driver_id');
+        */
         $dir = getcwd() . "/drivers_documents_temp"; //dir absolute path
         $interval = strtotime('-24 hours'); //files older than 24hours
         foreach (glob($dir . "*.*") as $file) {
@@ -208,7 +218,9 @@ class App_driver extends MY_Controller {
         $email = strtolower($this->input->post('email'));
 
         $checkEmail = $this->driver_model->check_driver_exist(array('email' => $email));
+
         if ($checkEmail->num_rows() >= 1) {
+
            $this->setErrorMessage('error', 'This email already exist, please register with different email address.', 'dash_email_already_exist');
             redirect('app/driver/signup');
         }
@@ -234,7 +246,7 @@ class App_driver extends MY_Controller {
             'postal_code' => $this->input->post('postal_code')
         );
 
-        $image_data = array();
+     /*   $image_data = array();
 
         $config['overwrite'] = FALSE;
         $config['encrypt_name'] = TRUE;
@@ -249,14 +261,15 @@ class App_driver extends MY_Controller {
             $this->ImageResizeWithCrop(210, 210, $logoDetails['file_name'], './images/users/thumb/');
             $profile_image = $logoDetails['file_name'];
             $image_data['image'] = $logoDetails['file_name'];
-        }
+        }*/
 
         /*         * *
          *
          * document section 
          */
-        $documents = array();
-        $dr_documentArr = $this->input->post('driver_docx');  #echo '<pre>'; print_r($dr_documentArr); die;
+        #echo '<pre>'; print_r($dr_documentArr); die;
+        /*$documents = array();
+        $dr_documentArr = $this->input->post('driver_docx');
         $dr_expiryArr = $this->input->post('driver_docx_expiry');
         for ($i = 0; $i < count($dr_documentArr); $i++) {
             $fileArr = @explode('|:|', $dr_documentArr[$i]);
@@ -299,12 +312,19 @@ class App_driver extends MY_Controller {
             }
 
             $documents['vehicle'][(string) $fileTypeId] = array('typeName' => $docxName, 'fileName' => $fileName, 'expiryDate' => $expiryDate, 'verify_status' => 'No');
+        }*/
+        if($this->input->post('vehicle_type')!==false){
+
+         $vehicle_type=   new \MongoId($this->input->post('vehicle_type'));
+        }
+        else{
+            $vehicle_type=null;
         }
 
         $driver_data = array('created' => date('Y-m-d H:i:s'),
             'email' => $email,
             'password' => md5($this->input->post('password')),
-            'vehicle_type' => new \MongoId($this->input->post('vehicle_type')),
+            'vehicle_type' => $vehicle_type,
             'status' => $status,
             'ac' => $ac,
             'no_of_rides' => 0,
@@ -315,6 +335,7 @@ class App_driver extends MY_Controller {
             'category' => new \MongoId($this->input->post('category'))
         );
 
+
          if($this->input->post('driver_commission') == ''){
 			$cond=array('_id'=> new \MongoId($this->input->post('driver_location')));
 			$get_loc_commison = $this->driver_model->get_selected_fields(LOCATIONS,$cond,array('site_commission'));
@@ -324,11 +345,12 @@ class App_driver extends MY_Controller {
 		}
 
 
-        $dataArr = array_merge($driver_data, $image_data, $addressArr, array('documents' => $documents)); 
+        $dataArr = array_merge($driver_data, /*$image_data,*/ $addressArr/*array('documents' => $documents)*/);
 
         $condition = array();
         $this->driver_model->commonInsertUpdate(DRIVERS, 'insert', $excludeArr, $dataArr, $condition);
         $last_insert_id = $this->cimongo->insert_id();
+
         $fields = array(
             'username' => (string) $last_insert_id,
             'password' => md5((string) $last_insert_id)

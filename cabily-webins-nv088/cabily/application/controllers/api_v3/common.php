@@ -82,7 +82,6 @@ class Common extends MY_Controller {
 	public function update_receive_mode() {
         $returnArr['status'] = '0';
         $returnArr['response'] = '';
-		
 		try {
 			$usertype = (string)strtolower($this->input->post('user_type'));	# 	(user/driver)
 			$id = (string)$this->input->post('id');
@@ -127,6 +126,7 @@ class Common extends MY_Controller {
 	**/
 		
 	public function get_app_info() {
+
         $returnArr['status'] = '0';
         $returnArr['response'] = '';
 		

@@ -565,7 +565,10 @@ class Drivers extends MY_Controller {
         $json_encode = json_encode($returnArr, JSON_PRETTY_PRINT);
         echo $this->cleanString($json_encode);
     }
-	
+
+
+
+    
 }
 
 /* End of file drivers.php */

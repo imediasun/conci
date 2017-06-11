@@ -55,8 +55,8 @@ class User extends MY_Controller {
 		/* Authentication End */
 		
     }
-	
-	
+
+
 	
 	/**
      * 

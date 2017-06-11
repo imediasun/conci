@@ -294,6 +294,15 @@ class Profile extends MY_Controller {
         $this->data['brandList'] = $this->driver_model->get_all_details(BRAND, array('status' => 'Active'), array('brand_name' => 'ASC'));
         $this->data['modelList'] = $this->driver_model->get_all_details(MODELS, array('status' => 'Active'), array('name' => 'ASC'));
         $this->data['locationDetail'] = $get_locationId;
+        $str = @file_get_contents(base_url().'/lg_files/languages_list.json');
+        $str_arr=json_decode($str);
+        $i=0;
+        foreach($str_arr as $key=>$obj){
+
+            $this->data['languagesList'][$i]->dial_code=$obj->code;
+            $this->data['languagesList'][$i]->name=$obj->name;
+            $i++;
+        }
         $this->load->view('driver/templates/register', $this->data);
     }
 
@@ -307,7 +316,7 @@ class Profile extends MY_Controller {
         /**
          * clear the temp folders
          */
-        echo '<pre>'; print_r($_POST); die;
+        #echo '<pre>'; print_r($_POST); die;
 
         $driver_id = $this->input->post('driver_id');
 

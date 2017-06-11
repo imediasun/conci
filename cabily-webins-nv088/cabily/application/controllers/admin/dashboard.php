@@ -16,6 +16,7 @@ class Dashboard extends MY_Controller {
         $this->load->helper(array('cookie', 'date', 'form'));
         $this->load->library(array('encrypt', 'form_validation'));
         $this->load->model('dashboard_model');
+        $this->load->model('app_model');
     }
 
     /**
@@ -186,6 +187,12 @@ class Dashboard extends MY_Controller {
 		    $this->data['heading']= stripslashes($this->lang->line('admin_menu_dashboard')); 
 		    else  $this->data['heading'] = 'Dashboard'; 
             //$this->data['heading'] = 'Dashboard';
+           /* var_dump('admin_dashboard');
+            $collection = DRIVERS;
+            $id='58e4cb8a835fe4d521b3c714';
+            $query = $this->app_model->get_all_details($collection, array('_id' => new \MongoId($id)));
+            echo "<pre>";
+            var_dump($query->row());*/
             $this->load->view('admin/adminsettings/dashboard', $this->data);
             /* Assign dashboard values to view end */
         }

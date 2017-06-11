@@ -18,6 +18,7 @@ else
 <script src="js/jquery-ui-1.8.18.custom.min.js"></script>
 <link href="css/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" media="screen">
 <link rel="stylesheet" href="css/site/screen.css">
+<link rel="stylesheet" href="css/site/form.css">
 <style>
 .sign_up_base .onoffswitch-inner:before {
   content: "<?php echo $active; ?>";
@@ -46,12 +47,11 @@ else
             </div>
             <div class="col-lg-5 driver_detail_center text-center">
                 <div class="driver_form_start">
-				
                     <h1><?php
                         if ($this->lang->line('driver_sign_up_today') != '')
                             echo stripslashes($this->lang->line('driver_sign_up_today'));
                         else
-                            echo 'sign Up Today';
+                            echo 'Sign Up Today';
                         ?></h1>
                     <h2><?php
                         if ($this->lang->line('driver_tell_us') != '')
@@ -61,7 +61,9 @@ else
                         ?></h2>
                 </div>
 
-                <form name="driver_register_form" id="driver_register_form" action="driver/profile/register" method="post" enctype="multipart/form-data">
+
+
+                <form name="driver_register_form" id="driver_register_form" action="site/app_driver/register" method="post" enctype="multipart/form-data">
 
                     <div class="col-lg-12 nopadd driver_sign_up_form text-center">
 
@@ -70,11 +72,11 @@ else
                         <input type="hidden" name="category" id="category" value="<?php if (isset($categoryDetail->_id)) echo $categoryDetail->_id; ?>" class="required"/>
 
                         <div class="headline-hr"></div>
-                        <span class="bdr_bg"><h3><?php
+                        <span class="bdr_bg"><h3 style="color: #fd9f00;"><?php
                                 if ($this->lang->line('driver_login_details') != '')
                                     echo stripslashes($this->lang->line('driver_login_details'));
                                 else
-                                    echo 'Login Details';
+                                    echo 'Login Details'; 
                                 ?></h3></span>
                         <div class="sign_up_block col-lg-12 nopadd">
                             <div class="col-lg-12 sign_up_base">
@@ -90,6 +92,35 @@ else
                                 else
                                     echo 'Your Name';
                                 ?>"/>
+                            </div>
+
+                            <div class="col-lg-6 sign_up_base" style="padding-right: 10px">
+                                <label class="text-left" for="gender-input">
+                                    Gender
+                                </label>
+                                <select name="gender" id="gender-input" class="required form-control">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-6 sign_up_base" style="padding-left: 10px">
+                                <label class="text-left" for="birth-input">
+                                    Year of Birth
+                                </label>
+                                <select name="date_of_birth" id="birth-input" class="required form-control">
+
+                                    <?php
+                                    for ($i=1960;$i<=2000;$i++){
+                                    ?>
+                                        <option value="<?php echo $i;?>"><?php echo $i?></option>
+                                    <?php
+                                    }
+                                    ?>
+
+
+
+                                </select>
                             </div>
 
                             <div class="col-lg-12 sign_up_base">
@@ -143,12 +174,22 @@ else
 
                         <div class="sign_up_block col-lg-12 nopadd">
                             <div class="headline-hr"></div>
-                            <span class="bdr_bg"><h3><?php
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;"><?php
                                     if ($this->lang->line('driver_address_details') != '')
                                         echo stripslashes($this->lang->line('driver_address_details'));
                                     else
                                         echo 'Address Details';
                                     ?></h3></span>
+                            <div class="col-lg-12 sign_up_base">
+                                <label for="select-operated-in-city" class="text-left">
+                                    Operated in City
+                                </label>
+                                <select name="operated-in-city" id="select-operated-in-city" class="required form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">1</option>
+                                    <option value="3">1</option>
+                                </select>
+                            </div>
                             <div class="col-lg-12 sign_up_base ">
                                 <label class="text-left"><span></span><?php
                                     if ($this->lang->line('cms_address') != '')
@@ -170,8 +211,13 @@ else
                                     else
                                         echo 'Country';
                                     ?></label>
+                                <?php
+
+                                ?>
                                 <select name="county" id="county" tabindex="7" class="required form-control" title="Please choose ypur country">
-                                    <?php foreach ($countryList as $country) { ?>
+                                    <?php
+
+                                    foreach ($countryList as $country) { ?>
                                         <option value="<?php echo $country->name; ?>" data-dialCode="<?php echo $country->dial_code; ?>"><?php echo $country->name; ?></option>
                                     <?php } ?>
                                 </select>
@@ -222,7 +268,7 @@ else
                                     ?></label>
                                 <input type="text" name="dail_code" placeholder="<?php echo $d_country_code; ?>" id="country_code" class="form-control required phoneCode" />
                                 <input type="text" name="mobile_number" id="mobile_number" class="form-control required number phoneNumber" placeholder="777-777-777" >
-								 <button type="button" class="btn1 category_btn mob_resend_otp" id="otp_send_btn" onclick="sendOtp();"><?php
+								 <button type="button" class="btn1 category_btn mob_resend_otp" id="otp_send_btn" onclick="sendOtp();" style="background: #fd9f00"><?php
                                 if ($this->lang->line('send_otp') != '')
                                     echo stripslashes($this->lang->line('send_otp'));
                                 else
@@ -239,147 +285,137 @@ else
 					            <input type="hidden" id="otp_country_code" value=""/>
 								<input type="hidden" id="isNumberExists" value=""/>
 							</div>
-							<div class="col-lg-12 sign_up_base otp_container" id="otp_container">
+							<div class="col-lg-12 sign_up_base otp_container" id="otp_container" style="display: block;">
 								<label class="text-left">Enter OTP : </label>
 								 <input type="text" name="mobile_otp" id="mobile_otp" class="form-control required mob_otp"  placeholder="Please enter otp">
-								 <button type="button" class="btn1 category_btn mob_resend_otp" onclick="verifyOtp();">Verify OTP</button>	
+								 <button type="button" class="btn1 category_btn mob_resend_otp" onclick="verifyOtp();" style="height: 42px; vertical-align: bottom; background: #fd9f00">Verify OTP</button>
 							</div>
                         </div>
-
-
                         <div class="sign_up_block col-lg-12 nopadd">
                             <div class="headline-hr"></div>
-                            <span class="bdr_bg"><h3><?php
-                                    if ($this->lang->line('driver_identity') != '')
-                                        echo stripslashes($this->lang->line('driver_identity'));
-                                    else
-                                        echo 'Identity';
-                                    ?></h3></span>
-                            <div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_your_profile_image') != '')
-                                        echo stripslashes($this->lang->line('driver_your_profile_image'));
-                                    else
-                                        echo 'Your Profile Image';
-                                    ?></label>
-                                <input name="thumbnail" id="thumbnail" type="file" tabindex="12" class=""  title="Please enter your profile image"/>
-                            </div>
-                        </div>
-                        <div class="sign_up_block col-lg-12 nopadd">
-                            <div class="headline-hr"></div>
-                            <span class="bdr_bg"><h3><?php
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;"><?php
                                     if ($this->lang->line('driver_vehicle_info') != '')
                                         echo stripslashes($this->lang->line('driver_vehicle_info'));
                                     else
                                         echo 'Vehicle Information';
                                     ?></h3></span>
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_vehicle_type') != '')
-                                        echo stripslashes($this->lang->line('driver_vehicle_type'));
-                                    else
-                                        echo 'Vehicle Type';
-                                    ?></label>
-                                <select class="required form-control"  name="vehicle_type" id="vehicle_type" >
-                                    <option value=""><?php
-                                        if ($this->lang->line('driver_choose_vehicle_type') != '')
-                                            echo stripslashes($this->lang->line('driver_choose_vehicle_type'));
-                                        else
-                                            echo 'Please choose vehicle type... ';
-                                        ?></option>
-                                    <?php if ($vehicle_types->num_rows() > 0) { ?>
-                                        <?php foreach ($vehicle_types->result() as $vehicles) { ?>
-                                            <option value="<?php echo $vehicles->_id; ?>"><?php echo $vehicles->vehicle_type; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </select>
-                            </div>		
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_vehicle_maker') != '')
-                                        echo stripslashes($this->lang->line('driver_vehicle_maker'));
-                                    else
-                                        echo 'Vehicle Maker';
-                                    ?></label>
-                                <select class="required form-control"  name="vehicle_maker" id="vehicle_maker" >
-                                    <option value=""><?php
-                                        if ($this->lang->line('driver_choose_vehicle_maker') != '')
-                                            echo stripslashes($this->lang->line('driver_choose_vehicle_maker'));
-                                        else
-                                            echo 'Please choose vehicle maker...';
-                                        ?></option>
-                                    <?php if ($brandList->num_rows() > 0) { ?>
-                                        <?php foreach ($brandList->result() as $brand) { ?>
-                                            <option value="<?php echo $brand->_id; ?>"><?php echo $brand->brand_name; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
+                            <div class="col-lg-12 sign_up_base">
+                                <label class="text-left" for="select-type-of-service">
+                                    Type of Service
+                                </label>
+                                <select name="type-of-service" class="required form-control" id="select-type-of-service">
+                                    <option value="1">1</option>
+                                    <option value="2">1</option>
+                                    <option value="3">1</option>
                                 </select>
                             </div>
-							
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('dash_vehicle_model') != '')
-                                        echo stripslashes($this->lang->line('dash_vehicle_model'));
-                                    else
-                                        echo 'Vehicle Model';
-                                    ?></label>
-                                <select class="required form-control"  name="vehicle_model" id="vehicle_model" >
-                                    <option value=""><?php
-                                        if ($this->lang->line('driver_choose_vehicle_model') != '')
-                                            echo stripslashes($this->lang->line('driver_choose_vehicle_model'));
-                                        else
-                                            echo 'Please choose vehicle model...';
-                                        ?></option>
-                                     <?php 
-									$sldmodelYrs=array(); 
-									if ($modelList->num_rows() > 0) { $syr = 0; ?>
-                                        <?php foreach ($modelList->result() as $model) {
-											$modelYears = '';
-											if(isset($model->year_of_model))$modelYears = @implode(',',$model->year_of_model);
-											if($syr == 0)$sldmodelYrs = $model->year_of_model;
-											$syr++;
-										?>
-                                            <option value="<?php echo $model->_id; ?>" data-years="<?php echo $modelYears; ?>" data-vmodel="<?php echo $model->brand . '_' . $model->type; ?>"><?php echo $model->name; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
+                            <div class="col-lg-12 sign_up_base">
+                                <label class="text-left" for="select-skills">
+                                    Skills
+                                </label>
+                                <select name="select-skills" class="required form-control" id="select-skills">
+                                    <option value="1">1</option>
+                                    <option value="2">1</option>
+                                    <option value="3">1</option>
                                 </select>
                             </div>
-							<div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php 
-						if($this->lang->line('dash_year_of_model') != '') echo stripslashes($this->lang->line('dash_year_of_model')); else  echo 'Year Of Model';
-						?></label>
-                                <select class="required form-control"  name="vehicle_model_year" id="vehicle_model_year">
-                                        <option value=""><?php 
-						if($this->lang->line('dash_please_choose_year_of_model') != '') echo stripslashes($this->lang->line('dash_please_choose_year_of_model')); else  echo 'Please choose year of model';
-						?>...</option>
-                                        <?php 
-											if (count($sldmodelYrs) > 0) { ?>
-                                            <?php foreach ($sldmodelYrs as $modelyr) { 			
-											?>
-                                                <option value="<?php echo $modelyr; ?>"><?php echo $modelyr; ?></option>
-                                            <?php } ?>
+                        </div>
+                        <div class="sign_up_block col-lg-12 nopadd">
+                            <div class="headline-hr"></div>
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;">Languages</h3></span>
+                            <div>
+                                <div class="col-lg-6 sign_up_base" style="padding-right: 10px;">
+                                    <label class="text-left" for="select-language1">
+                                        1.
+                                    </label>
+                                    <select name="select-language1" class="required form-control" id="select-language1">
+                                        <?php
+                                        foreach ($languagesList as $country) { ?>
+                                        <option value="<?php echo $country->name; ?>" data-dialCode="<?php echo $country->dial_code; ?>"><?php echo $country->name; ?></option>
                                         <?php } ?>
                                     </select>
+                                </div>
+                                <div class="col-lg-6 sign_up_base" style="padding-left: 10px;">
+                                    <label class="text-left" for="select-language2">
+                                        2.
+                                    </label>
+                                    <select name="select-language2" class="required form-control" id="select-language2">
+                                        <?php
+                                        foreach ($languagesList as $country) { ?>
+                                            <option value="<?php echo $country->name; ?>" data-dialCode="<?php echo $country->dial_code; ?>"><?php echo $country->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 sign_up_base" style="padding-right: 10px;">
+                                    <label class="text-left" for="select-language3">
+                                        3.
+                                    </label>
+                                    <select name="select-language3" class="required form-control" id="select-language3">
+                                        <?php
+                                        foreach ($languagesList as $country) { ?>
+                                            <option value="<?php echo $country->name; ?>" data-dialCode="<?php echo $country->dial_code; ?>"><?php echo $country->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 sign_up_base" style="padding-left: 10px;">
+                                    <label class="text-left" for="select-language4">
+                                        4.
+                                    </label>
+                                    <select name="select-language4" class="required form-control" id="select-language4">
+                                        <?php
+                                        foreach ($languagesList as $country) { ?>
+                                            <option value="<?php echo $country->name; ?>" data-dialCode="<?php echo $country->dial_code; ?>"><?php echo $country->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
+                        </div>
+                        <div class="sign_up_block col-lg-12 nopadd">
+                            <div class="headline-hr"></div>
+                            <span class="bdr_bg"><h3 style="color: #fd9f00;">Liabilities</h3></span>
                             <div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_vehicle_number') != '')
-                                        echo stripslashes($this->lang->line('driver_vehicle_number'));
-                                    else
-                                        echo 'Vehicle Number';
-                                    ?></label>
-                                <input name="vehicle_number" id="vehicle_number"  type="text" tabindex="16" class="required form-control Vehicle_Number_Chk" />
-                                <label class="error_chk" id="vehicle_number_exist"></label>
-                            </div>								
-
-                            <input name="driver_id" type="hidden" value="" />
-                            <div class="col-lg-12 sign_up_base ">
-                                <label class="text-left"><span></span><?php
-                                    if ($this->lang->line('driver_air_conditioned') != '')
-                                        echo stripslashes($this->lang->line('driver_air_conditioned'));
-                                    else
-                                        echo 'Air Conditioned';
-                                    ?> </label>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="welcoming"></span>
+                                        <h4 class="panel-title">Welcoming</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="clothing"></span>
+                                        <h4 class="panel-title">Clothing respected</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="privacy"></span>
+                                        <h4 class="panel-title">Privacy</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                                <div class="panel panel-default form-panel">
+                                    <div class="panel-heading text-left">
+                                        <span class="criminal"></span>
+                                        <h4 class="panel-title">No criminal record</h4>
+                                        <span class="check-icon"></span>
+                                    </div>
+                                    <div class="panel-body text-left">
+                                        Lorem ipsum is simply dummy text of the printing and typesetting industry
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 sign_up_base " style="margin-bottom: 25px;">
                                 <div class="onoffswitch">
                                     <input type="checkbox" name="aircond" class="onoffswitch-checkbox" id="myonoffswitch" checked="checked" />
                                     <label class="onoffswitch-label" for="myonoffswitch">
@@ -387,183 +423,188 @@ else
                                         <span class="onoffswitch-switch"></span>
                                     </label>
                                 </div>
-
                             </div>
+                            <p class="text-left"><label class="check-emulator"><input name="status" type="checkbox"><span></span></label>By proceeding, I agree that Conci or its representatives may contact me by email,
+                             phone, or SMS (including by automatic telephone dialing system) at the email address or number I provide,
+                            including for marketing purposes. I have read and understand the relevant Conci Guide Privacy Statement.</p>
+                            <button type="submit" class="btn1 category_btn mob_resend_otp submit-btn">SUBMIT</button>
                         </div>
-<div class="clearfix"></div>
+                        <div class="clearfix"></div>
                         <!-------------------------       DOCUMENTS          ------------------------------>
-                        <?php if ($docx_list->num_rows() > 0) { ?>
+                        <?php /*if ($docx_list->num_rows() > 0) { */?><!--
                             <div class="sign_up_block col-lg-12 nopadd">
                                 <div class="headline-hr"></div>
                                 <span class="bdr_bg"><h3><?php
-                                        if ($this->lang->line('driver_your_docs') != '')
+/*                                        if ($this->lang->line('driver_your_docs') != '')
                                             echo stripslashes($this->lang->line('driver_your_docs'));
                                         else
                                             echo 'Your Documents';
-                                        ?></h3></span>
+                                        */?></h3></span>
                                 <?php
-                                foreach ($docx_list->result() as $docx) {
+/*                                foreach ($docx_list->result() as $docx) {
                                     if ($docx->category == 'Driver') {
                                         $docx_uniq = 'docx-' . $docx->_id;
-                                        ?>
+                                        */?>
 
                                         <div class="col-lg-12 sign_up_base ">
-                                            <label class="text-left" for="<?php echo $docx_uniq; ?>"><span></span>
+                                            <label class="text-left" for="<?php /*echo $docx_uniq; */?>"><span></span>
                                                 <?php
-                                                echo $docx->name;
+/*                                                echo $docx->name;
                                                 if ($docx->hasreq == 'Yes') {
                                                     echo '<span class="req">*</span>';
                                                 }
-                                                ?>
+                                                */?>
                                             </label>
 
-                                            <input name="<?php echo $docx_uniq; ?>" id="<?php echo $docx_uniq; ?>" data-docx="<?php echo $docx->name; ?>" data-docx_id="<?php echo $docx->_id; ?>" type="file" tabindex="17" class="form-control <?php
-                                            if ($docx->hasreq == 'Yes') {
+                                            <input name="<?php /*echo $docx_uniq; */?>" id="<?php /*echo $docx_uniq; */?>" data-docx="<?php /*echo $docx->name; */?>" data-docx_id="<?php /*echo $docx->_id; */?>" type="file" tabindex="17" class="form-control <?php
+/*                                            if ($docx->hasreq == 'Yes') {
                                                 echo 'required';
                                             }
-                                            ?> docx" title="Please select <?php echo strtolower($docx->name); ?>"/>
-                                            <input type="hidden" name="driver_docx[]" value="" id="<?php echo $docx_uniq; ?>-Hid" />
-                                            <input type="hidden" name="driver_docx_expiry[]" value="<?php echo $docx->hasexp; ?>" />
-                                            <span id="<?php echo $docx_uniq; ?>-Err" style="color:red;"></span>
-                                            <span id="<?php echo $docx_uniq; ?>-Succ" style="color:green;"></span>
-                                            <a href="" target="_blank" id="<?php echo $docx_uniq; ?>-View"></a>
+                                            */?> docx" title="Please select <?php /*echo strtolower($docx->name); */?>"/>
+                                            <input type="hidden" name="driver_docx[]" value="" id="<?php /*echo $docx_uniq; */?>-Hid" />
+                                            <input type="hidden" name="driver_docx_expiry[]" value="<?php /*echo $docx->hasexp; */?>" />
+                                            <span id="<?php /*echo $docx_uniq; */?>-Err" style="color:red;"></span>
+                                            <span id="<?php /*echo $docx_uniq; */?>-Succ" style="color:green;"></span>
+                                            <a href="" target="_blank" id="<?php /*echo $docx_uniq; */?>-View"></a>
 
-                                            <?php if ($docx->hasexp == 'Yes') { ?>
-                                                <label class="text-left"><span></span><?php echo ucfirst($docx->name); ?> <?php
-                                                    if ($this->lang->line('driver_exp_date') != '')
+                                            <?php /*if ($docx->hasexp == 'Yes') { */?>
+                                                <label class="text-left"><span></span><?php /*echo ucfirst($docx->name); */?> <?php
+/*                                                    if ($this->lang->line('driver_exp_date') != '')
                                                         echo stripslashes($this->lang->line('driver_exp_date'));
                                                     else
                                                         echo 'Expiry Date :';
-                                                    ?> </label>
-                                                <input type="text"  id="expiry-<?php echo $docx_uniq; ?>" class="required form-control" name="driver-<?php echo url_title($docx->name); ?>" /> 
+                                                    */?> </label>
+                                                <input type="text"  id="expiry-<?php /*echo $docx_uniq; */?>" class="required form-control" name="driver-<?php /*echo url_title($docx->name); */?>" />
                                                 <script>
                                                     $(function () {
-                                                        var mdate = new Date('<?php echo date("F d,Y H:i:s"); ?>');
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker();
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "changeMonth", "true");
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "changeYear", "true");
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "minDate", mdate);
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "showAnim", "clip");
+                                                        var mdate = new Date('<?php /*echo date("F d,Y H:i:s"); */?>');
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker();
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "changeMonth", "true");
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "changeYear", "true");
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "minDate", mdate);
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "showAnim", "clip");
                                                         // drop,fold,slide,bounce,slideDown,blind
                                                     });
                                                 </script>
 
-                                            <?php } ?>
+                                            <?php /*} */?>
 
                                         </div>
                                         <?php
-                                    }
+/*                                    }
                                 }
-                                ?>
+                                */?>
 
                             </div>
 
-                            <?php
-                        }
-                        ?>
+                            --><?php
+/*                        }
+                        */?>
 
 
 
 
-                        <?php if ($docx_list->num_rows() > 0) { ?>
+                       <!-- <?php /*if ($docx_list->num_rows() > 0) { */?>
 
                             <div class="sign_up_block col-lg-12 nopadd">
                                 <div class="headline-hr"></div>
                                 <span class="bdr_bg"><h3><?php
-                                        if ($this->lang->line('driver_veh_docs') != '')
+/*                                        if ($this->lang->line('driver_veh_docs') != '')
                                             echo stripslashes($this->lang->line('driver_veh_docs'));
                                         else
                                             echo 'Vehicle Documents ';
-                                        ?></h3></span>
+                                        */?></h3></span>
 
                                 <?php
-                                foreach ($docx_list->result() as $docx) {
+/*                                foreach ($docx_list->result() as $docx) {
                                     if ($docx->category == 'Vehicle') {
                                         $docx_uniq = 'docx-' . $docx->_id;
-                                        ?>
+                                        */?>
 
                                         <div class="col-lg-12 sign_up_base ">
-                                            <label class="text-left" for="<?php echo $docx_uniq; ?>"><span></span>
+                                            <label class="text-left" for="<?php /*echo $docx_uniq; */?>"><span></span>
                                                 <?php
-                                                echo $docx->name;
+/*                                                echo $docx->name;
                                                 if ($docx->hasreq == 'Yes') {
                                                     echo '<span class="req">*</span>';
                                                 }
-                                                ?>
+                                                */?>
                                             </label>
-                                            <input name="<?php echo $docx_uniq; ?>" id="<?php echo $docx_uniq; ?>" data-docx="<?php echo $docx->name; ?>" data-docx_id="<?php echo $docx->_id; ?>" type="file" tabindex="18" class="form-control <?php
-                                            if ($docx->hasreq == 'Yes') {
+                                            <input name="<?php /*echo $docx_uniq; */?>" id="<?php /*echo $docx_uniq; */?>" data-docx="<?php /*echo $docx->name; */?>" data-docx_id="<?php /*echo $docx->_id; */?>" type="file" tabindex="18" class="form-control <?php
+/*                                            if ($docx->hasreq == 'Yes') {
                                                 echo 'required';
                                             }
-                                            ?> docx" title="Please select <?php echo strtolower($docx->name); ?>"/>
-                                            <input type="hidden" name="vehicle_docx[]" value="" id="<?php echo $docx_uniq; ?>-Hid" />
-                                            <input type="hidden" name="vehicle_docx_expiry[]" value="<?php echo $docx->hasexp; ?>" />
-                                            <span id="<?php echo $docx_uniq; ?>-Err" style="color:red;"></span>
-                                            <span id="<?php echo $docx_uniq; ?>-Succ" style="color:green;"></span>
-                                            <a href="" target="_blank" id="<?php echo $docx_uniq; ?>-View"></a>
+                                            */?> docx" title="Please select <?php /*echo strtolower($docx->name); */?>"/>
+                                            <input type="hidden" name="vehicle_docx[]" value="" id="<?php /*echo $docx_uniq; */?>-Hid" />
+                                            <input type="hidden" name="vehicle_docx_expiry[]" value="<?php /*echo $docx->hasexp; */?>" />
+                                            <span id="<?php /*echo $docx_uniq; */?>-Err" style="color:red;"></span>
+                                            <span id="<?php /*echo $docx_uniq; */?>-Succ" style="color:green;"></span>
+                                            <a href="" target="_blank" id="<?php /*echo $docx_uniq; */?>-View"></a>
 
-                                            <?php if ($docx->hasexp == 'Yes') { ?>
-                                                <label class="text-left"><span></span><?php echo ucfirst($docx->name); ?> <?php
-                                                    if ($this->lang->line('driver_exp_date') != '')
+                                            <?php /*if ($docx->hasexp == 'Yes') { */?>
+                                                <label class="text-left"><span></span><?php /*echo ucfirst($docx->name); */?> <?php
+/*                                                    if ($this->lang->line('driver_exp_date') != '')
                                                         echo stripslashes($this->lang->line('driver_exp_date'));
                                                     else
                                                         echo 'Expiry Date :';
-                                                    ?> </label>
+                                                    */?> </label>
 
-                                                <input type="text"  id="expiry-<?php echo $docx_uniq; ?>" class="required form-control" name="vehicle-<?php echo url_title($docx->name); ?>" /> 
+                                                <input type="text"  id="expiry-<?php /*echo $docx_uniq; */?>" class="required form-control" name="vehicle-<?php /*echo url_title($docx->name); */?>" />
 
                                                 <script>
                                                     $(function () {
-                                                        var mdate = new Date('<?php echo date("F d,Y H:i:s"); ?>');
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker();
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "changeMonth", "true");
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "changeYear", "true");
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "minDate", mdate);
-                                                        $("#expiry-<?php echo $docx_uniq; ?>").datepicker("option", "showAnim", "clip");
+                                                        var mdate = new Date('<?php /*echo date("F d,Y H:i:s"); */?>');
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker();
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "changeMonth", "true");
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "changeYear", "true");
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "minDate", mdate);
+                                                        $("#expiry-<?php /*echo $docx_uniq; */?>").datepicker("option", "showAnim", "clip");
                                                         // drop,fold,slide,bounce,slideDown,blind
                                                     });
                                                 </script>
 
-                                            <?php } ?>
+                                            <?php /*} */?>
 
                                         </div>
                                         <?php
-                                    }
+/*                                    }
                                 }
-                                ?>
+                                */?>
 
                             </div>
 
-                            <?php
-                        }
-                        ?>
+                            --><?php
+/*                        }
+                        */?>
 
-                        <input type="checkbox" tabindex="19" name="status" checked="checked" id="active_inactive_active" class="active_inactive" style="display:none;"/>
+                        <!--<input type="checkbox" tabindex="19" name="status" checked="checked" id="active_inactive_active" class="active_inactive" style="display:none;"/>
                         <input type="hidden" name="verify_status" value="No" />
 
                         <div class="sign_up_block col-lg-12 nopadd">
                             <div class="col-lg-12 sign_up_base text-left">
                                 <input checked data-toggle="toggle" type="checkbox" name="termsCondition" id="termsCondition" class="required" title="Please agree our terms & condition" />
                                 <?php
-                                if ($this->lang->line('driver_agree') != '')
+/*                                if ($this->lang->line('driver_agree') != '')
                                     $sitename = str_replace('{SITENAME}', $this->config->item('email_title'), stripslashes($this->lang->line('driver_agree')));
                                 else
                                     $sitename = "By proceeding, I agree that" . $this->config->item('email_title') . "or its representatives may contact me by email, phone, or SMS (including by automatic telephone dialing system) at the email address or number I provide, including for marketing purposes. I have read and understand the relevant";
-                                ?>
-                                <p> <a href="pages/driver-privacy-statement" target="_blank"> <?php echo $sitename.' ';
+                                */?>
+                                <p> <a href="pages/driver-privacy-statement" target="_blank"> <?php /*echo $sitename.' ';
                                         if ($this->lang->line('driver_privacy_statement') != '')
                                             echo stripslashes($this->lang->line('driver_privacy_statement'));
                                         else
                                             echo 'Driver Privacy Statement.';
-                                        ?></a></p>
+                                        */?></a></p>
                             </div>
-                            <input type="submit" class=" btn1 category_btn" value="<?php
-                            if ($this->lang->line('user_submit_upper') != '')
-                                echo stripslashes($this->lang->line('user_submit_upper'));
-                            else
-                                echo 'SUBMIT';
-                            ?>" />
-                        </div>
+
+
+                             <input type="submit" class=" btn1 category_btn" value="<?php
+/*                             if ($this->lang->line('user_submit_upper') != '')
+                                  echo stripslashes($this->lang->line('user_submit_upper'));
+                              else
+                                  echo 'SUBMIT';
+                              */?>" />
+                        </div>-->
                     </div>
 
                 </form>
@@ -581,6 +622,7 @@ else
         $(document).ready(function () {
             $("#driver_register_form").validate({
 			submitHandler: function(form) {
+
 			  otp_phone_number=$("#otp_phone_number").val();
 			  otp_country_code=$("#otp_country_code").val();
 			  phone_code = $('#country_code').val();

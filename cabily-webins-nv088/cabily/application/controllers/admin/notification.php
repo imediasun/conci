@@ -11,7 +11,7 @@ class Notification extends MY_Controller {
         parent::__construct();
         $this->load->helper(array('cookie', 'date', 'form'));
         $this->load->library(array('encrypt', 'form_validation','curl'));
-        $this->load->model('notification_model', 'notify_model');
+        $this->load->model('notification_model','notify_model');
 
         if ($this->checkPrivileges('user', $this->privStatus) == FALSE) {
             redirect('admin');
@@ -328,6 +328,22 @@ class Notification extends MY_Controller {
         if (!empty($apple_user)) {
             $this->sendPushNotification($apple_user, $message, 'ads', 'IOS', $options, 'USER');
         }
+
+			//Here we stor the data of this push notification to database
+			/*
+             *  @author     Andrey Lopushansky
+             *
+             * */
+
+			$dataArr = array(
+			'user_id' => new \MongoId($userIds),
+				
+			'notification_template_id'=>$getTemplateDetails->row()->_id,
+			'user_type'=>$user_type
+			);
+
+
+			$this->cimongo->insert(NOTIFICATIONS, $dataArr);
         $this->setErrorMessage('success', 'Notifications Sent.','admin_notification_sent');
         redirect('admin/notification/display_notification_user_list');
 		
@@ -353,6 +369,7 @@ class Notification extends MY_Controller {
 	 */
 	
 	public function send_notification_to_device_driver() {
+
         if($this->checkLogin('A') == ''){
 			redirect('admin');
 		}
@@ -428,7 +445,20 @@ class Notification extends MY_Controller {
         if (!empty($apple_driver)) {
             $this->sendPushNotification($apple_driver, $message, 'ads', 'IOS', $options, 'DRIVER');
         }
-        $this->setErrorMessage('success', 'Notifications Sent.','admin_notification_sent');
+		//Here we stor the data of this push notification to database
+		/*
+		 *  @author     Andrey Lopushansky
+		 *
+		 * */
+
+		$dataArr = array('user_id' => new \MongoId($userIds),
+		'notification_template_id'=>new \MongoId($getTemplateDetails->row()->_id),
+		'user_type'=>$user_type
+		);
+
+
+		$this->cimongo->insert(NOTIFICATIONS, $dataArr);
+        $this->setErrorMessage('success', 'Notifications Sent to the driver.','admin_notification_sent');
         redirect('admin/notification/display_notification_driver_list');
     
 		}else{
